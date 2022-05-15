@@ -6,35 +6,34 @@ public class SpeedUp : MonoBehaviour
 {
     private Rigidbody2D rb;
 
-    public float PlayerSpeed;
-
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        Invoke("Accel", 3);
     }
 
-    // Update is called once per frame
-    void Update()
+    void Accel()
     {
-        
+        // 参照するスクリプト
+        PlayerMove playerMove;
+        // Playerというオブジェクトを探す
+        GameObject Player = GameObject.Find("Player");
+        // Playerに付いているスクリプトを取得
+        playerMove = Player.GetComponent<PlayerMove>();
+        // PlayerSpeedを変える
+        playerMove.PlayerSpeed = playerMove.PlayerSpeed * 2.0f;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
-	{
-		// 衝突した相手にPlayerタグが付いているとき
-		if (other.CompareTag("Player"))
-		{
-            StartCoroutine("speedUp");
-			// 0.1秒後に消える
-			Destroy(this.gameObject, 0.1f);
-		}
-	}
-
-    IEnumerator speedUp()
     {
-        yield return new WaitForSeconds(3.0f * Time.deltaTime);
-        PlayerSpeed = PlayerSpeed * 2f;
+        // 衝突した相手にPlayerタグが付いているとき
+        if (other.CompareTag("Player"))
+        {
+            Accel();
+            // 0.1秒後に消える
+            Destroy(this.gameObject, 0.1f);
+        }
     }
 
 }

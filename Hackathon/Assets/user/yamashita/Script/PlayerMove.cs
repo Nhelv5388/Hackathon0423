@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerMove : MonoBehaviour
 {
-    public float PlayerSpeed = 3.0f;
+    public float PlayerSpeed;
     private Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        PlayerSpeed = 3.0f;
     }
 
     // Update is called once per frame
@@ -30,21 +31,5 @@ public class Player : MonoBehaviour
         }
         
     }
-    
-    
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.name == "Gimmick")
-        {
-            StartCoroutine("SpeedUp");
-        }
-    }
-
-    IEnumerator SpeedUp()
-    {
-        yield return new WaitForSeconds(3.0f * Time.deltaTime);
-        PlayerSpeed = PlayerSpeed * 2f;
-    }
-    
 
 }
