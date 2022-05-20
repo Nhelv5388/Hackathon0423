@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class SpeedUp : MonoBehaviour
 {
-    //private Rigidbody2D rb;
-
     // Start is called before the first frame update
     private float startSpeed;
     void Start()
     {
-        //rb = GetComponent<Rigidbody2D>();
         // 参照するスクリプト
         PlayerMove playerMove;
         // Playerというオブジェクトを探す
