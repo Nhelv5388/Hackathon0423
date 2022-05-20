@@ -4,13 +4,25 @@ using UnityEngine;
 
 public class SpeedUp : MonoBehaviour
 {
-    private Rigidbody2D rb;
+    //private Rigidbody2D rb;
 
     // Start is called before the first frame update
+    private float startSpeed;
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        Invoke("Accel", 3);
+        //rb = GetComponent<Rigidbody2D>();
+        // 参照するスクリプト
+        PlayerMove playerMove;
+        // Playerというオブジェクトを探す
+        GameObject Player = GameObject.Find("Player");
+        // Playerに付いているスクリプトを取得
+        playerMove = Player.GetComponent<PlayerMove>();
+        startSpeed = playerMove.PlayerSpeed;
+    }
+
+    void Update()
+    {
+
     }
 
     void Accel()
@@ -21,7 +33,7 @@ public class SpeedUp : MonoBehaviour
         GameObject Player = GameObject.Find("Player");
         // Playerに付いているスクリプトを取得
         playerMove = Player.GetComponent<PlayerMove>();
-        // PlayerSpeedを変える
+        // 加速
         playerMove.PlayerSpeed = playerMove.PlayerSpeed * 2.0f;
     }
 
@@ -31,9 +43,17 @@ public class SpeedUp : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Accel();
+            Invoke("SpeedReset", 3.0f);
             // 0.1秒後に消える
             Destroy(this.gameObject, 0.1f);
         }
     }
 
+    void SpeedReset()
+    {
+        PlayerMove playerMove;
+        GameObject Player = GameObject.Find("Player");
+        playerMove = Player.GetComponent<PlayerMove>();
+        playerMove.PlayerSpeed = playerMove.PlayerSpeed / 2.0f;
+    }
 }

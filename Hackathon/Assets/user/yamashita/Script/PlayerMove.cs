@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    public float PlayerSpeed;
+    public float PlayerSpeed = 3.0f;
     private Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        PlayerSpeed = 3.0f;
     }
 
     // Update is called once per frame
